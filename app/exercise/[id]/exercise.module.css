@@ -1,0 +1,110 @@
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.title {
+  font-size: 26px;
+  line-height: 32px;
+  font-weight: 600;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.h3 {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.steps {
+  margin: 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  line-height: 22px;
+}
+
+.steps li::marker {
+  color: var(--mut);
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+}
+
+.equipment {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.equipment li {
+  padding: 8px 12px;
+  border-radius: var(--r-md);
+  background: var(--sunk);
+  font-size: 14px;
+}
+
+.muscles {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.muscles li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.muscles li:last-child {
+  border-bottom: 0;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+  transform: translateY(-1px);
+}
+
+.muscleName {
+  flex: 1;
+  min-width: 0;
+}
+
+.groupName {
+  flex: none;
+  color: var(--mut);
+  font-size: 12px;
+}
+
+.disclaimer {
+  color: var(--mut);
+  font-size: 12px;
+  line-height: 17px;
+}

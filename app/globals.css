@@ -1,49 +1,232 @@
+/* Design tokens ported from the Atlas / Exercise Library artifacts, which use
+   the Atlassian Design System palette. Light and dark are both first-class. */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f7f8f9;
+  --surface: #ffffff;
+  --sunk: #f1f2f4;
+  --sub: #f7f8f9;
+  --ink: #172b4d;
+  --subtle: #44546f;
+  --mut: #626f86;
+  --line: #dcdfe4;
+  --line-strong: #8590a2;
+  --brand: #0c66e4;
+  --brand-hover: #0055cc;
+  --brand-sub: #e9f2ff;
+  --brand-text: #0055cc;
+  --focus: #388bff;
+  --ok-bg: #dcfff1;
+  --ok-text: #216e4e;
+  --warn-bg: #fff7d6;
+  --warn-text: #974f0c;
+  --shadow: 0 1px 1px rgb(9 30 66 / 25%), 0 0 1px rgb(9 30 66 / 31%);
+  --shadow-lifted: 0 8px 12px rgb(9 30 66 / 15%), 0 0 1px rgb(9 30 66 / 31%);
+
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --touch: 48px;
+  --gutter: 16px;
+  --app-max: 460px;
+
+  --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
+    'Helvetica Neue', sans-serif;
+  --serif: 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+
+  color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme='light']) {
+    --bg: #1d2125;
+    --surface: #22272b;
+    --sunk: #161a1d;
+    --sub: #282e33;
+    --ink: #b6c2cf;
+    --subtle: #9fadbc;
+    --mut: #8c9bab;
+    --line: #38414a;
+    --line-strong: #738496;
+    --brand: #579dff;
+    --brand-hover: #85b8ff;
+    --brand-sub: #1c2b41;
+    --brand-text: #85b8ff;
+    --focus: #85b8ff;
+    --ok-bg: #1c3329;
+    --ok-text: #7ee2b8;
+    --warn-bg: #332e1b;
+    --warn-text: #f5cd47;
+    --shadow: 0 1px 1px rgb(3 4 4 / 50%), 0 0 1px rgb(3 4 4 / 50%);
+    --shadow-lifted: 0 8px 12px rgb(3 4 4 / 36%), 0 0 1px rgb(3 4 4 / 50%);
+
+    color-scheme: dark;
   }
 }
 
-html {
-  height: 100%;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  height: 100%;
 }
 
 body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--sunk);
+  color: var(--ink);
+  font: 15px/22px var(--sans);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
+h1,
+h2,
+h3 {
+  margin: 0;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+p {
   margin: 0;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  color: var(--brand);
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ------------------------------------------------------------ app shell */
+
+.shell {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  max-width: var(--app-max);
+  margin: 0 auto;
+  background: var(--surface);
+  position: relative;
+}
+
+@media (min-width: 560px) {
+  .shell {
+    box-shadow: var(--shadow-lifted);
+  }
+}
+
+/* Scrolling body of a screen. */
+.screen {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 28px var(--gutter) 24px;
+  padding-left: max(var(--gutter), env(safe-area-inset-left));
+  padding-right: max(var(--gutter), env(safe-area-inset-right));
+}
+
+/* Sticky action bar at the bottom of a step. */
+.actions {
+  position: sticky;
+  bottom: 0;
+  padding: 12px var(--gutter);
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+/* ------------------------------------------------------------- controls */
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--touch);
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--sunk);
+}
+
+.btnPrimary {
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #fff;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background: var(--brand-hover);
+  border-color: var(--brand-hover);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.eyebrow {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.muted {
+  color: var(--mut);
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--r-sm);
+  background: var(--sunk);
+  color: var(--subtle);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

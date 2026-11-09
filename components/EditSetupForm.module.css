@@ -1,0 +1,47 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+.input {
+  height: var(--touch);
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--sunk);
+  color: var(--ink);
+}
+
+.input:focus-visible {
+  border-color: var(--focus);
+}
+
+.counter {
+  color: var(--mut);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.trash {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--mut);
+}
+
+.trash:hover {
+  background: var(--sunk);
+  color: var(--ink);
+}

@@ -1,0 +1,55 @@
+.stage {
+  position: relative;
+  flex: none;
+  margin: 4px 12px 0;
+  border-radius: var(--r-lg);
+  background: var(--sub);
+  overflow: hidden;
+}
+
+.hint {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--mut);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.facing {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+.facing button {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.facing button[aria-pressed='true'] {
+  background: var(--brand);
+  color: #fff;
+}
+
+.list {
+  padding-top: 16px;
+  gap: 16px;
+}

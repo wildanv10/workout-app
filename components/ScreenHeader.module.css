@@ -1,0 +1,44 @@
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+  padding: 8px 8px 0;
+  padding-left: max(8px, env(safe-area-inset-left));
+  padding-right: max(8px, env(safe-area-inset-right));
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--ink);
+}
+
+.icon:hover {
+  background: var(--sunk);
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  font-size: 19px;
+  line-height: 26px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.step {
+  flex: none;
+  padding-right: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mut);
+}

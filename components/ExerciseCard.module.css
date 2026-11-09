@@ -1,0 +1,135 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+}
+
+.card:hover {
+  background: var(--sunk);
+}
+
+.thumb {
+  width: 56px;
+  height: 64px;
+  flex: none;
+  border-radius: var(--r-md);
+  background: var(--sub);
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.name {
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.meta {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--mut);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.level {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.level i {
+  display: block;
+  width: 4px;
+  height: 9px;
+  border-radius: 1px;
+  background: var(--line);
+}
+
+.level i.on {
+  background: var(--mut);
+}
+
+.levelText {
+  font-size: 11px;
+  color: var(--mut);
+  margin-left: 2px;
+}
+
+.remove {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--mut);
+}
+
+.remove:hover {
+  background: var(--line);
+  color: var(--ink);
+}
+
+.add {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: transparent;
+  color: var(--brand);
+}
+
+.add:hover {
+  background: var(--brand-sub);
+}
+
+.dots {
+  display: flex;
+  gap: 3px;
+  flex: none;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgb(9 30 66 / 14%);
+}
+
+.link {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
