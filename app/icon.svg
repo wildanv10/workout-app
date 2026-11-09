@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Workout">
+  <rect width="512" height="512" rx="112.6" fill="#0C66E4"/>
+  <rect x="169.0" y="238.1" width="174.1" height="35.8" rx="9.2" fill="#fff"/>
+  <rect x="120.3" y="181.8" width="46.1" height="148.5" rx="14.3" fill="#fff"/>
+  <rect x="345.6" y="181.8" width="46.1" height="148.5" rx="14.3" fill="#fff"/>
+  <rect x="76.8" y="207.4" width="35.8" height="97.3" rx="11.3" fill="#fff"/>
+  <rect x="399.4" y="207.4" width="35.8" height="97.3" rx="11.3" fill="#fff"/>
+</svg>

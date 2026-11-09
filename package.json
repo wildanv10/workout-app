@@ -14,7 +14,8 @@
     "extract-data": "node scripts/extract-data.mjs",
     "test": "vitest run",
     "build-art": "node scripts/build-equipment-art.mjs",
-    "install-art": "node scripts/install-equipment-art.mjs"
+    "install-art": "node scripts/install-equipment-art.mjs",
+    "make-icons": "node scripts/make-icons.mjs"
   },
   "dependencies": {
     "next": "16.4.5",
