@@ -1,0 +1,42 @@
+.wrap {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--sunk);
+  color: var(--mut);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 34ch;
+}
+
+.title {
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.actions > a {
+  text-decoration: none;
+}
