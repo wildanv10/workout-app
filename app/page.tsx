@@ -45,6 +45,30 @@ export default function HomePage() {
         </Link>
       )}
 
+      {state.programs.length > 0 && (
+        <section className={styles.block}>
+          <div className={styles.blockHead}>
+            <h2 className={styles.h2}>Saved programs</h2>
+            <Link href="/programs" className={styles.viewAll}>
+              View all
+            </Link>
+          </div>
+          {state.programs.slice(0, 2).map((program) => (
+            <Link key={program.id} href="/programs" className={styles.resume}>
+              <Icon name="bookmark" className={styles.setupIcon} />
+              <span className={styles.resumeMain}>
+                <span className={styles.resumeName}>{program.name}</span>
+                <span className="muted">
+                  {program.exerciseIds.length}{' '}
+                  {program.exerciseIds.length === 1 ? 'exercise' : 'exercises'}
+                </span>
+              </span>
+              <Icon name="next" />
+            </Link>
+          ))}
+        </section>
+      )}
+
       <section className={styles.block}>
         <h2 className={styles.h2}>Your setup</h2>
         <Link href="/equipment" className={styles.setup}>

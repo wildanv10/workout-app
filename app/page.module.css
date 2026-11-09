@@ -93,3 +93,17 @@
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
+
+.blockHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.viewAll {
+  color: var(--brand);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}

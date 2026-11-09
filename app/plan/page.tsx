@@ -62,6 +62,8 @@ export default function PlanPage() {
 
   if (!plan || !setup) return null;
 
+  const saved = !!plan.programId && state.programs.some((p) => p.id === plan.programId);
+
   /** Groups that are in the plan only as supporting muscles, or not at all. */
   const thin = coverage.filter((c) => c.primaryCount === 0 && !impossible.includes(c.group));
 
@@ -79,7 +81,23 @@ export default function PlanPage() {
 
   return (
     <>
-      <ScreenHeader title={workoutName(plan.muscles)} fallbackHref="/" />
+      {/* Back goes home: the generate step is behind us and should stay there. */}
+      <ScreenHeader
+        title={workoutName(plan.muscles)}
+        backHref="/"
+        showHome={false}
+        trailing={
+          <button
+            type="button"
+            className={styles.save}
+            aria-pressed={saved}
+            aria-label={saved ? 'Remove from programs' : 'Save as a program'}
+            onClick={() => dispatch({ type: saved ? 'unsaveProgram' : 'saveProgram' })}
+          >
+            <Icon name="bookmark" solid={saved} />
+          </button>
+        }
+      />
 
       <main className="screen">
         <section className={styles.summary}>
