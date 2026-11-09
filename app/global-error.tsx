@@ -120,11 +120,12 @@ body {
 
 export default function GlobalError({
   error,
-  reset,
+  retry,
 }: {
   // The thrown value is forwarded as-is and need not be an Error.
   error: unknown;
-  reset: () => void;
+  // retry() re-fetches and re-renders, which reset() does not.
+  retry: () => void;
 }) {
   useEffect(() => {
     // Local only - nothing is reported anywhere.
@@ -150,7 +151,7 @@ export default function GlobalError({
           </div>
 
           <div className="ge-actions">
-            <button type="button" className="ge-btn ge-primary" onClick={reset}>
+            <button type="button" className="ge-btn ge-primary" onClick={() => retry()}>
               Try again
             </button>
             <Link className="ge-btn" href="/">

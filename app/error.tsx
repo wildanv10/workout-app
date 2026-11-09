@@ -12,12 +12,14 @@ import styles from './error.module.css';
  */
 export default function RouteError({
   error,
-  reset,
+  retry,
 }: {
   // A value thrown in a Client Component is forwarded as-is and need not be an
   // Error, so narrow it before reading anything off it.
   error: unknown;
-  reset: () => void;
+  // retry() re-fetches and re-renders the children; reset() only clears the
+  // boundary, so after a server-side failure it can re-throw and look dead.
+  retry: () => void;
 }) {
   useEffect(() => {
     // Local only - nothing is reported anywhere.
@@ -39,7 +41,7 @@ export default function RouteError({
       </div>
 
       <div className={styles.actions}>
-        <button type="button" className="btn btnPrimary" onClick={reset}>
+        <button type="button" className="btn btnPrimary" onClick={() => retry()}>
           Try again
         </button>
         <Link href="/" className={`btn ${styles.link}`}>
