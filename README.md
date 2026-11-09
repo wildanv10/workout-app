@@ -82,44 +82,73 @@ The exercise steps were written in Indonesian in the source data and translated
 to English in `scripts/steps/`, one sentence per original step. That translation
 is the hand-written part of the dataset; everything else is mechanical.
 
-## The 3D body
+## The 3D engine
 
-`engine/fig-core.js` and `engine/fig-poses.js` are vendored **verbatim** from the
-Atlas artifact (a dependency-free canvas-2D mannequin renderer with
-drag-to-rotate and tap-to-select hit testing), so they can be re-synced if the
-artifact changes. They are excluded from lint for that reason. Two deliberate
-changes were made:
+`engine/ecorche.vendor.js` is the Atlas Écorché engine, vendored **verbatim**
+from its artifact: a dependency-free WebGL2 renderer with a procedurally built
+anatomical muscle body (199k vertices, 358k triangles, a 20-bone rig), an
+animated motion for **every one of the 104 exercises**, and 3D models for 38 of
+the 41 equipment items. It is excluded from lint so it stays re-syncable, and is
+named `.vendor.js` so that nothing resolves `./ecorche` to it instead of the
+typed wrapper — Vite prefers `.js` over `.ts`, which bit once already.
 
-- `lowerback` renamed to `lowback`, matching both datasets.
-- `midback`, `obliques` and `adductors` blobs added — the engine only defined 13
-  of the 16 groups, so those three were selectable as chips but not tappable on
-  the body.
+`engine/ecorche.ts` is that wrapper: it loads the engine once per page, in the
+browser only (it assigns `window.Ecorche` at import time and needs WebGL2),
+types the viewer API, and maps the app's design tokens onto the viewer.
 
-They assign `window.GF` at import time, so they are only ever loaded in the
-browser. `engine/gf.ts` is the typed wrapper that does that and is what app code
-calls.
+The engine builds its mesh in about a second and holds a WebGL2 context, so
+there is **one viewer per screen, never one per list row**. Three screens use
+it, all through `components/EcorcheCanvas.tsx`:
 
-**Animation coverage:** `fig-poses.js` has 14 motion templates, which genuinely
-fit 45 of the 104 exercises. `components/ExerciseVisual.tsx` falls back in order:
+| Screen | What it shows |
+|---|---|
+| `/new/muscles` | The body. Tap a muscle to toggle its group; every selected group highlights at once |
+| `/exercise/[id]` | The exercise animated, with play/pause, 0.5×/1×/2× and a scrubber |
+| Equipment info popup | One piece of equipment on its own, auto-framed and rotating |
 
-1. an animation, where a template really matches the movement
-2. the isometric illustration of the equipment it uses
-3. a still body with the target muscles highlighted
+Multi-select needs `setFocus()` with the muscle keys of all selected groups —
+the engine's own `selectGroup()` holds one group at a time.
 
-An exercise is left without `anim` rather than being given a motion that would
-show the wrong movement.
+Where WebGL2 is missing each falls back: the picker drops to its chips alone,
+and the exercise and equipment views show the isometric illustration.
+
+### Phase labels
+
+The engine labels each segment of a movement in Indonesian.
+`engine/phase-labels.ts` translates all 258, and a test fails if the engine ever
+uses one we have not translated. An unknown label is hidden rather than shown in
+Indonesian.
+
+### One id mismatch
+
+The engine slugs exercise names without stripping apostrophes, so Farmer's Carry
+is `farmer-s-carry` there and `farmers-carry` here. `motionIdOf()` bridges that
+single case; the other 103 match exactly.
 
 ## Storage
 
 All state is client-side, in `localStorage` under `workout.v1`: equipment setups,
-the active setup, the selected muscles, and the last generated plan.
+the active setup, the selected muscles, the last generated plan, and saved
+programs.
 `lib/store.ts` is an external store read through `useSyncExternalStore`, so the
 server renders defaults and the client swaps in saved state without a
 setState-in-effect round trip. Blocked or private-mode storage is caught — the
 app still works for that session.
 
+## Programs
+
+Bookmarking a generated session saves it as a program, listed under the Programs
+tab. A saved program stays in step with its session: adding or removing an
+exercise while it is open updates the program too.
+
+## Navigation
+
+Three tabs — Home, Programs, Equipment — on the top-level screens only; step and
+detail screens get a back arrow and a home shortcut instead. Generating a session
+**replaces** the equipment step in history, so going back from a built session
+never returns to the generate screen, and backing out of the session goes home.
+
 ## Not built yet
 
-By scope decision, the first version stops at generating the session. The Atlas
-design also had a workout player (set tracking, sets/reps steppers), saved
-programs with progress, and drag-to-reorder. The data model leaves room for them.
+The Atlas design also had a workout player (set tracking, sets/reps steppers),
+per-program progress, and drag-to-reorder. The data model leaves room for them.
