@@ -1,0 +1,5 @@
+# esbuild (a vitest dependency) ships its binary as a prebuilt platform package,
+# so its postinstall script is not needed - tests and builds both pass with it
+# ignored. Left off rather than approved so no install-time script runs.
+allowBuilds:
+  esbuild: false
