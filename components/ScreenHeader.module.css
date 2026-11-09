@@ -20,6 +20,10 @@
   color: var(--ink);
 }
 
+.icon {
+  text-decoration: none;
+}
+
 .icon:hover {
   background: var(--sunk);
 }

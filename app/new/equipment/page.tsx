@@ -43,7 +43,8 @@ export default function ChooseEquipmentPage() {
           variant: 0,
         },
       });
-      router.push('/plan');
+      // replace, so going back from the session never returns to this step
+      router.replace('/plan');
     }, GENERATING_MS);
   };
 

@@ -4,6 +4,7 @@ import styles from './BottomNav.module.css';
 
 const TABS: { href: string; label: string; icon: IconName }[] = [
   { href: '/', label: 'Home', icon: 'home' },
+  { href: '/programs', label: 'Programs', icon: 'bookmark' },
   { href: '/equipment', label: 'Equipment', icon: 'dumbbell' },
 ];
 
