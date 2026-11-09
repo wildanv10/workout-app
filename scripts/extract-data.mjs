@@ -66,32 +66,6 @@ const EQUIPMENT_CATEGORIES = [
   ['cardio', 'Cardio', ['jr', 'ropes']],
 ];
 
-/** Exercise name -> fig-poses animation template, only where the motion really
-    matches. Everything else falls back to an equipment illustration. */
-const ANIM = {
-  squat: ['Barbell Back Squat', 'Front Squat', 'Bodyweight Squat', 'Hack Squat', 'Leg Press',
-    'Bulgarian Split Squat', 'Pistol Squat'],
-  gobletsquat: ['Goblet Squat'],
-  deadlift: ['Barbell Deadlift', 'Trap Bar Deadlift', 'Romanian Deadlift', 'Sumo Deadlift'],
-  row: ['Bent-over Barbell Row', 'One-arm Dumbbell Row', 'Seated Cable Row', 'T-Bar Row'],
-  curl: ['Barbell Curl', 'Alternating Dumbbell Curl', 'Hammer Curl', 'Preacher Curl',
-    'Incline Dumbbell Curl', 'Reverse Curl'],
-  press: ['Barbell Overhead Press', 'Seated Dumbbell Shoulder Press', 'Arnold Press',
-    'Machine Shoulder Press'],
-  lateral: ['Dumbbell Lateral Raise'],
-  triext: ['Overhead Triceps Extension', 'Triceps Pushdown'],
-  pushup: ['Push-up', 'Diamond Push-up', 'Archer Push-up', 'Pseudo Planche Push-up'],
-  plank: ['Plank'],
-  bench: ['Barbell Bench Press', 'Incline Barbell Bench Press', 'Decline Bench Press',
-    'Dumbbell Bench Press', 'Incline Dumbbell Press', 'Close-grip Bench Press',
-    'Machine Chest Press'],
-  crunch: ['Crunch'],
-  bridge: ['Glute Bridge', 'Barbell Hip Thrust'],
-  calf: ['Standing Calf Raise'],
-};
-const ANIM_OF = {};
-for (const [key, names] of Object.entries(ANIM)) for (const n of names) ANIM_OF[n] = key;
-
 const CATEGORY_OF = { G: 'gym', B: 'bodyweight', C: 'calisthenics' };
 const LEVEL_LABEL = { 1: 'Beginner', 2: 'Intermediate', 3: 'Advanced' };
 
@@ -282,7 +256,6 @@ for (const [sectionNameId, list] of SECTIONS) {
       secondary,
       groups: groupOrder.filter((g) => groupSet.has(g)),
       steps: steps ?? [],
-      anim: ANIM_OF[x.n],
     });
   }
 }
@@ -298,7 +271,7 @@ const exerciseTs = (e) => {
     equipment: [${eq}],
     primary: [${e.primary.map((m) => `'${m}'`).join(', ')}],
     secondary: [${e.secondary.map((m) => `'${m}'`).join(', ')}],
-    groups: [${e.groups.map((g) => `'${g}'`).join(', ')}],${e.anim ? `\n    anim: '${e.anim}',` : ''}
+    groups: [${e.groups.map((g) => `'${g}'`).join(', ')}],
     steps: [
 ${e.steps.map((s) => `      ${q(s)},`).join('\n')}
     ],
@@ -316,10 +289,6 @@ export type ExerciseCategory = 'gym' | 'bodyweight' | 'calisthenics';
 
 /** 1 beginner, 2 intermediate, 3 advanced. */
 export type Level = 1 | 2 | 3;
-
-/** Animation templates available in engine/fig-poses.js. */
-export type AnimKey =
-${Object.keys(ANIM).map((k) => `  | '${k}'`).join('\n')};
 
 export interface ExerciseEquipment {
   code: EquipmentCode;
@@ -339,7 +308,6 @@ export interface Exercise {
   secondary: string[];
   /** Muscle groups touched by primary or secondary muscles, derived. */
   groups: MuscleGroupId[];
-  anim?: AnimKey;
   steps: string[];
 }
 
@@ -383,7 +351,6 @@ writeFileSync(join(ROOT, 'data', 'muscles.ts'), musclesTs);
 writeFileSync(join(ROOT, 'data', 'equipment.ts'), equipmentTs);
 writeFileSync(join(ROOT, 'data', 'exercises.ts'), exercisesTs);
 
-const animCount = exercises.filter((e) => e.anim).length;
 console.log('data/muscles.ts    ', MUSCLE_GROUPS.length, 'groups,', Object.keys(MUSCLES).length, 'muscles');
 console.log('data/equipment.ts  ', Object.keys(EQUIP).length, 'items,', EQUIPMENT_CATEGORIES.length, 'categories');
-console.log('data/exercises.ts  ', exercises.length, 'exercises,', animCount, 'with animations');
+console.log('data/exercises.ts  ', exercises.length, 'exercises');

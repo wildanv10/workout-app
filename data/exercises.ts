@@ -18,23 +18,6 @@ export type ExerciseCategory = 'gym' | 'bodyweight' | 'calisthenics';
 /** 1 beginner, 2 intermediate, 3 advanced. */
 export type Level = 1 | 2 | 3;
 
-/** Animation templates available in engine/fig-poses.js. */
-export type AnimKey =
-  | 'squat'
-  | 'gobletsquat'
-  | 'deadlift'
-  | 'row'
-  | 'curl'
-  | 'press'
-  | 'lateral'
-  | 'triext'
-  | 'pushup'
-  | 'plank'
-  | 'bench'
-  | 'crunch'
-  | 'bridge'
-  | 'calf';
-
 export interface ExerciseEquipment {
   code: EquipmentCode;
   /** Optional gear can be substituted or skipped - it never gates availability. */
@@ -53,7 +36,6 @@ export interface Exercise {
   secondary: string[];
   /** Muscle groups touched by primary or secondary muscles, derived. */
   groups: MuscleGroupId[];
-  anim?: AnimKey;
   steps: string[];
 }
 
@@ -95,7 +77,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['ps', 'pc'],
     secondary: ['da', 'tlo', 'tla', 'tme', 'sa'],
     groups: ['chest', 'shoulders', 'triceps', 'obliques'],
-    anim: 'bench',
     steps: [
       'Lie on the flat bench with your eyes directly under the barbell and both feet planted on the floor.',
       'Grip the bar slightly wider than shoulder width and pull your shoulder blades back and down.',
@@ -114,7 +95,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['pc'],
     secondary: ['ps', 'da', 'tlo', 'tla', 'tme'],
     groups: ['chest', 'shoulders', 'triceps'],
-    anim: 'bench',
     steps: [
       'Set the bench back to a 30–45° angle, then lie down with your eyes under the barbell.',
       'Grip the bar slightly wider than shoulder width and squeeze your shoulder blades together.',
@@ -133,7 +113,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['ps'],
     secondary: ['pc', 'tlo', 'tla', 'tme', 'da'],
     groups: ['chest', 'shoulders', 'triceps'],
-    anim: 'bench',
     steps: [
       'Hook your feet under the pads of the decline bench, then lie back with your head lower than your hips.',
       'Grip the bar slightly wider than shoulder width and unrack it.',
@@ -151,7 +130,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['ps', 'pc'],
     secondary: ['da', 'tlo', 'tla', 'tme'],
     groups: ['chest', 'shoulders', 'triceps'],
-    anim: 'bench',
     steps: [
       'Sit on the end of the bench with the dumbbells on your thighs, then lie back as you bring them to the sides of your chest.',
       'Position the dumbbells level with your chest, palms facing your feet, shoulder blades squeezed together.',
@@ -169,7 +147,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['pc'],
     secondary: ['ps', 'da', 'tlo', 'tla', 'tme'],
     groups: ['chest', 'shoulders', 'triceps'],
-    anim: 'bench',
     steps: [
       'Set the bench to a 30–45° angle, sit down and bring the dumbbells to the front of your shoulders.',
       'Lie back with your back and head against the bench and your feet planted.',
@@ -238,7 +215,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['ps', 'pc'],
     secondary: ['da', 'tlo', 'tla', 'tme'],
     groups: ['chest', 'shoulders', 'triceps'],
-    anim: 'bench',
     steps: [
       'Adjust the seat so the handles line up with your mid chest, then sit with your back against the pad.',
       'Grip the handles with your shoulder blades pinned to the backrest.',
@@ -256,7 +232,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['ps', 'pc'],
     secondary: ['da', 'tlo', 'tla', 'tme', 'sa', 'ra'],
     groups: ['chest', 'shoulders', 'triceps', 'abs', 'obliques'],
-    anim: 'pushup',
     steps: [
       'Start in a high plank: palms on the floor slightly wider than your shoulders, body straight from head to heels.',
       'Brace your abs and glutes so your hips do not sag.',
@@ -274,7 +249,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['tla', 'tme', 'tlo'],
     secondary: ['ps', 'pc', 'da'],
     groups: ['chest', 'shoulders', 'triceps'],
-    anim: 'pushup',
     steps: [
       'Start in a high plank with both hands under your chest, thumbs and index fingers forming a diamond.',
       'Keep your body straight and your abs braced.',
@@ -292,7 +266,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['ps', 'pc'],
     secondary: ['tlo', 'tla', 'tme', 'da', 'sa', 'eo'],
     groups: ['chest', 'shoulders', 'triceps', 'obliques'],
-    anim: 'pushup',
     steps: [
       'Start in a push-up position with your hands set very wide.',
       'Lower your body toward one hand while the other arm stays straight out to the side.',
@@ -310,7 +283,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['da', 'pc'],
     secondary: ['tlo', 'tla', 'tme', 'sa', 'ra', 'bl', 'bs'],
     groups: ['chest', 'shoulders', 'biceps', 'triceps', 'abs', 'obliques'],
-    anim: 'pushup',
     steps: [
       'Start in a push-up position with your hands beside your waist, fingers pointing out to the sides or behind you.',
       'Lean your body forward until your shoulders are well past your hands.',
@@ -430,7 +402,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['rh', 'tm', 'la'],
     secondary: ['tj', 'dp', 'bl', 'bs', 'brd', 'es'],
     groups: ['shoulders', 'traps', 'biceps', 'forearms', 'lats', 'midback', 'lowback'],
-    anim: 'row',
     steps: [
       'Sit with your feet on the platform and your knees slightly bent, holding the V-bar.',
       'Sit tall with your chest open and your back neutral.',
@@ -448,7 +419,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['la', 'rh', 'tm'],
     secondary: ['dp', 'tj', 'bl', 'bs', 'es', 'bfl'],
     groups: ['shoulders', 'traps', 'biceps', 'lats', 'midback', 'lowback', 'hamstrings'],
-    anim: 'row',
     steps: [
       'Stand with your feet hip width apart, holding the barbell overhand slightly wider than your shoulders.',
       'Bend your knees slightly and hinge forward from the hips to about 45° with a flat back.',
@@ -466,7 +436,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['la', 'rh'],
     secondary: ['tm', 'dp', 'tj', 'bl', 'bs', 'br'],
     groups: ['shoulders', 'traps', 'biceps', 'lats', 'midback'],
-    anim: 'row',
     steps: [
       'Place one knee and one hand on the bench with your back parallel to the floor.',
       'Hold a dumbbell in your other hand with that arm hanging straight down.',
@@ -484,7 +453,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['tm', 'rh', 'la'],
     secondary: ['dp', 'tj', 'bl', 'bs', 'es'],
     groups: ['shoulders', 'traps', 'biceps', 'lats', 'midback', 'lowback'],
-    anim: 'row',
     steps: [
       'Stand on the T-bar footplate, or rest your chest on the pad for the chest-supported version.',
       'Hold the handles and hinge forward from your hips with a flat back.',
@@ -553,7 +521,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['gx', 'es', 'bfl', 'bfs', 'st', 'sm'],
     secondary: ['am', 'rf', 'vl', 'vm', 'tu', 'la', 'fds', 'fcu', 'fcr'],
     groups: ['traps', 'forearms', 'lats', 'lowback', 'glutes', 'quads', 'adductors', 'hamstrings'],
-    anim: 'deadlift',
     steps: [
       'Stand with your feet hip width apart and the bar over the middle of your feet.',
       'Hinge at your hips and knees and grip the bar just outside your legs, back flat and chest lifted.',
@@ -572,7 +539,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['vl', 'vm', 'gx'],
     secondary: ['rf', 'es', 'bfl', 'bfs', 'st', 'sm', 'tu', 'fds', 'fcu', 'fcr'],
     groups: ['traps', 'forearms', 'lowback', 'glutes', 'quads', 'hamstrings'],
-    anim: 'deadlift',
     steps: [
       'Stand in the centre of the trap bar with your feet hip width apart.',
       'Squat down and grip the side handles with a flat back and your chest lifted.',
@@ -659,7 +625,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['da', 'dl'],
     secondary: ['tlo', 'tla', 'tme', 'pc', 'tu', 'sa'],
     groups: ['chest', 'shoulders', 'traps', 'triceps', 'obliques'],
-    anim: 'press',
     steps: [
       'Take the bar off the rack at shoulder height with a grip slightly wider than your shoulders.',
       'Stand with your feet hip width apart and brace your abs and glutes.',
@@ -677,7 +642,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['da', 'dl'],
     secondary: ['tlo', 'tla', 'tme', 'tu', 'sa'],
     groups: ['shoulders', 'traps', 'triceps', 'obliques'],
-    anim: 'press',
     steps: [
       'Set the bench upright and sit with the dumbbells beside your shoulders, palms facing forward.',
       'Keep your back against the backrest and your abs braced.',
@@ -695,7 +659,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['da', 'dl'],
     secondary: ['pc', 'tlo', 'tla', 'tme', 'sa'],
     groups: ['chest', 'shoulders', 'triceps', 'obliques'],
-    anim: 'press',
     steps: [
       'Sit tall holding the dumbbells in front of your shoulders with your palms facing you.',
       'Press up while rotating your palms until they face forward.',
@@ -713,7 +676,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['da', 'dl'],
     secondary: ['tlo', 'tla', 'tme'],
     groups: ['shoulders', 'triceps'],
-    anim: 'press',
     steps: [
       'Adjust the seat so the handles line up with your shoulders, then sit with your back against the pad.',
       'Grip the handles with your elbows below your hands.',
@@ -731,7 +693,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['dl'],
     secondary: ['tu', 'da', 'sa'],
     groups: ['shoulders', 'traps', 'obliques'],
-    anim: 'lateral',
     steps: [
       'Stand tall with the dumbbells at your sides and your elbows slightly bent.',
       'Lift the dumbbells out to the sides until your arms are level with your shoulders.',
@@ -851,7 +812,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['bl', 'bs'],
     secondary: ['br', 'brd', 'fcr'],
     groups: ['biceps', 'forearms'],
-    anim: 'curl',
     steps: [
       'Stand tall holding a barbell underhand at shoulder width.',
       'Keep your elbows pinned to your sides.',
@@ -869,7 +829,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['bl', 'bs'],
     secondary: ['br', 'brd'],
     groups: ['biceps', 'forearms'],
-    anim: 'curl',
     steps: [
       'Stand with the dumbbells at your sides, palms facing your thighs.',
       'Curl one dumbbell up while rotating your palm to face upward.',
@@ -887,7 +846,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['brd', 'br'],
     secondary: ['bl', 'ecr'],
     groups: ['biceps', 'forearms'],
-    anim: 'curl',
     steps: [
       'Stand with the dumbbells at your sides, palms facing each other.',
       'Curl the dumbbells up, keeping that neutral grip.',
@@ -905,7 +863,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['bs', 'br'],
     secondary: ['bl', 'brd'],
     groups: ['biceps', 'forearms'],
-    anim: 'curl',
     steps: [
       'Sit at the preacher bench with your upper arms resting on the pad.',
       'Hold the EZ bar with an underhand grip.',
@@ -923,7 +880,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['bl'],
     secondary: ['bs', 'br'],
     groups: ['biceps'],
-    anim: 'curl',
     steps: [
       'Set the bench to 45–60° and lie back with your arms hanging straight down.',
       'Hold the dumbbells with your palms facing forward.',
@@ -941,7 +897,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['brd', 'br'],
     secondary: ['ecr', 'exd', 'bl', 'bs'],
     groups: ['biceps', 'forearms'],
-    anim: 'curl',
     steps: [
       'Stand holding an EZ bar overhand, with your palms facing down.',
       'Keep your elbows at your sides.',
@@ -959,7 +914,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['tla', 'tme'],
     secondary: ['tlo'],
     groups: ['triceps'],
-    anim: 'triext',
     steps: [
       'Attach a rope or straight bar to the high pulley.',
       'Stand tall with your elbows tucked against your sides.',
@@ -994,7 +948,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['tlo'],
     secondary: ['tla', 'tme'],
     groups: ['triceps'],
-    anim: 'triext',
     steps: [
       'Stand or sit holding one dumbbell overhead with both hands.',
       'Keep your elbows pointing forward and close to your head.',
@@ -1012,7 +965,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['tla', 'tme', 'tlo'],
     secondary: ['ps', 'pc', 'da'],
     groups: ['chest', 'shoulders', 'triceps'],
-    anim: 'bench',
     steps: [
       'Lie on the bench and grip the bar at shoulder width.',
       'Unrack the bar and hold it above your chest.',
@@ -1098,7 +1050,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['vl', 'vm', 'rf', 'gx'],
     secondary: ['am', 'es', 'bfl', 'st', 'so', 'ra'],
     groups: ['abs', 'lowback', 'glutes', 'quads', 'adductors', 'hamstrings', 'calves'],
-    anim: 'squat',
     steps: [
       'Rest the bar on your upper back, above your trapezius, unrack it and step back two paces.',
       'Set your feet shoulder width apart with your toes turned slightly out.',
@@ -1117,7 +1068,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['vl', 'vm', 'rf'],
     secondary: ['gx', 'am', 'es', 'ra', 'tu'],
     groups: ['traps', 'abs', 'lowback', 'glutes', 'quads', 'adductors'],
-    anim: 'squat',
     steps: [
       'Rest the bar across the front of your shoulders with your elbows high in front, in the front rack position.',
       'Unrack the bar and set your feet shoulder width apart.',
@@ -1135,7 +1085,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['vl', 'vm', 'rf', 'gx'],
     secondary: ['am', 'ra', 'es', 'da'],
     groups: ['shoulders', 'abs', 'lowback', 'glutes', 'quads', 'adductors'],
-    anim: 'gobletsquat',
     steps: [
       'Hold a kettlebell or dumbbell in front of your chest with both hands.',
       'Set your feet slightly wider than your shoulders.',
@@ -1153,7 +1102,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['vl', 'vm', 'rf', 'gx'],
     secondary: ['am', 'so', 'es'],
     groups: ['lowback', 'glutes', 'quads', 'adductors', 'calves'],
-    anim: 'squat',
     steps: [
       'Stand with your feet shoulder width apart and your arms straight out in front.',
       'Push your hips back and bend your knees.',
@@ -1171,7 +1119,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['vl', 'vm', 'rf', 'gx'],
     secondary: ['am', 'st', 'so'],
     groups: ['glutes', 'quads', 'adductors', 'hamstrings', 'calves'],
-    anim: 'squat',
     steps: [
       'Sit with your back against the pad and your feet on the platform at shoulder width.',
       'Release the safeties and straighten your legs without locking your knees.',
@@ -1189,7 +1136,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['vl', 'vm', 'rf'],
     secondary: ['gx', 'am'],
     groups: ['glutes', 'quads', 'adductors'],
-    anim: 'squat',
     steps: [
       'Stand on the platform with your back and shoulders against the pads.',
       'Set your feet shoulder width apart in the middle of the platform and release the safeties.',
@@ -1207,7 +1153,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['vl', 'vm', 'gx'],
     secondary: ['gm', 'am', 'rf', 'so'],
     groups: ['glutes', 'quads', 'adductors', 'calves'],
-    anim: 'squat',
     steps: [
       'Stand with your back to a bench and rest the top of your rear foot on it.',
       'Step your front foot far enough forward, holding dumbbells if you want load.',
@@ -1259,7 +1204,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['bfl', 'st', 'sm', 'gx'],
     secondary: ['es', 'am', 'fds', 'fcu', 'fcr'],
     groups: ['forearms', 'lowback', 'glutes', 'adductors', 'hamstrings'],
-    anim: 'deadlift',
     steps: [
       'Stand tall holding a barbell in front of your thighs.',
       'Bend your knees slightly and lock them at that angle.',
@@ -1277,7 +1221,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['gx', 'am', 'vl', 'vm'],
     secondary: ['es', 'bfl', 'bfs', 'st', 'sm', 'al', 'tu', 'fds', 'fcu', 'fcr'],
     groups: ['traps', 'forearms', 'lowback', 'glutes', 'quads', 'adductors', 'hamstrings'],
-    anim: 'deadlift',
     steps: [
       'Stand with a very wide stance, toes turned out, and the bar over the middle of your feet.',
       'Grip the bar between your legs with straight arms.',
@@ -1346,7 +1289,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['gx'],
     secondary: ['bfl', 'st', 'gm', 'am'],
     groups: ['glutes', 'adductors', 'hamstrings'],
-    anim: 'bridge',
     steps: [
       'Sit with your upper back against the edge of a bench and the barbell over your hips.',
       'Plant your feet hip width apart with your knees bent.',
@@ -1364,7 +1306,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['gx'],
     secondary: ['bfl', 'bfs', 'st', 'sm', 'es', 'gm'],
     groups: ['lowback', 'glutes', 'hamstrings'],
-    anim: 'bridge',
     steps: [
       'Lie on your back with your knees bent and your feet flat on the floor.',
       'Rest your arms at your sides.',
@@ -1433,7 +1374,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['vl', 'vm', 'rf', 'gx'],
     secondary: ['gm', 'am', 'so', 'ra', 'ta'],
     groups: ['abs', 'glutes', 'quads', 'adductors', 'calves'],
-    anim: 'squat',
     steps: [
       'Stand on one leg with the other leg straight out in front of you.',
       'Hold your arms out in front for balance.',
@@ -1468,7 +1408,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['gmh', 'glh'],
     secondary: ['so', 'fl'],
     groups: ['calves'],
-    anim: 'calf',
     steps: [
       'Stand in the machine with the pads on your shoulders and the balls of your feet on the edge of the platform.',
       'Lower your heels below the platform until your calves stretch.',
@@ -1537,7 +1476,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['ra'],
     secondary: ['eo', 'sa', 'gx', 'da', 'rf'],
     groups: ['shoulders', 'abs', 'obliques', 'glutes', 'quads'],
-    anim: 'plank',
     steps: [
       'Support yourself on your forearms with your elbows under your shoulders.',
       'Straighten your legs so your body forms a line from head to heels.',
@@ -1572,7 +1510,6 @@ export const EXERCISES: Exercise[] = [
     primary: ['ra'],
     secondary: ['eo'],
     groups: ['abs', 'obliques'],
-    anim: 'crunch',
     steps: [
       'Lie on your back with your knees bent and your hands beside your head.',
       'Lift your shoulders off the floor by curling your spine.',
