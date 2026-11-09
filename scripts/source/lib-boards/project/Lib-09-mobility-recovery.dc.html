@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mobility &amp; recovery</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0C66E4}a:hover{color:#0055CC}
+</style>
+</helmet>
+<div style="width: 1440px; height: 920px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; background: #FFFFFF; color: #172B4D; font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid #DCDFE4;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 12px; line-height: 16px; font-weight: 500; color: #626F86;">Isometric library</span>
+<h1 style="margin: 0; font-size: 20px; line-height: 28px; font-weight: 600;">Mobility &amp; recovery</h1>
+</div>
+<span style="font-size: 13px; line-height: 20px; color: #626F86;">{{count}} items · 30° isometric SVG</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px;">
+<sc-for list="{{items}}" as="item" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<div style="height: 200px; box-sizing: border-box; padding: 16px; border-radius: 12px; background: #F7F8F9;"><img src="{{item.src}}" alt="{{item.alt}}" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; display: block;"></div>
+<div style="display: flex; flex-direction: column;"><span style="font-size: 13px; line-height: 20px; font-weight: 600;">{{item.name}}</span><span style="font-size: 11px; line-height: 16px; color: #626F86; font-family: ui-monospace, Menlo, monospace;">{{item.file}}</span></div>
+</div>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Upload a new SVG to this canvas first, then add it here with its /_blob/ url.
+    const items = [
+      { name: "Foam roller", file: 'foam-roller.svg', src: '/_blob/d4da58b8d6a2f72bb7f3658e4ca1e275', alt: "Foam rollers" },
+      { name: "Massage / lacrosse ball", file: 'massage-ball.svg', src: '/_blob/5396936539e320995250e5d9b3992192', alt: "Massage ball and peanut ball" },
+      { name: "Massage gun", file: 'massage-gun.svg', src: '/_blob/f1ba89dd12f7af023fadc0ed50d22612', alt: "Massage gun" },
+      { name: "Stretching strap", file: 'stretching-strap.svg', src: '/_blob/e7d026fd403a53d5eec0677b1635a87f', alt: "Stretching strap with loops" },
+      { name: "Yoga blocks", file: 'yoga-blocks.svg', src: '/_blob/d6465c370768a8bc0a90a5b2bc14438d', alt: "Pair of foam yoga blocks" },
+      { name: "Stretch cage / stretch machine", file: 'stretch-cage.svg', src: '/_blob/b22d0c1f4492e54a7d0c66d66fec6ee3', alt: "Stretch cage with pads and handles" },
+      { name: "Sauna", file: 'sauna.svg', src: '/_blob/dfeb038a258318f721b937bcf59c8b10', alt: "Sauna cabin with glass door" },
+      { name: "Steam room", file: 'steam-room.svg', src: '/_blob/5c5d0e838879e2afbf12a59566590c57', alt: "Steam room with tiled walls and glass front" },
+      { name: "Cold plunge", file: 'cold-plunge.svg', src: '/_blob/e8a8ef4a18836554b806ce212a862f2f', alt: "Cold plunge tub with steps and chiller" },
+      { name: "Compression boots", file: 'compression-boots.svg', src: '/_blob/c55d11b98ae0bffc27f0c0d2d25d7e47', alt: "Compression boots with control unit" },
+      { name: "Massage chair", file: 'massage-chair.svg', src: '/_blob/4a5cf58da9aa7fba939ec648bc42fcc4', alt: "Reclining massage chair" },
+      { name: "Hydromassage bed", file: 'hydromassage-bed.svg', src: '/_blob/b28b5a81a90330a0c5b2177a12cf71b4', alt: "Hydromassage bed" }
+    ];
+    return { items: items, count: items.length };
+  }
+}
+</script>
+</body>
+</html>

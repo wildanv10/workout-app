@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cardio</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0C66E4}a:hover{color:#0055CC}
+</style>
+</helmet>
+<div style="width: 1440px; height: 920px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; background: #FFFFFF; color: #172B4D; font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid #DCDFE4;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 12px; line-height: 16px; font-weight: 500; color: #626F86;">Isometric library</span>
+<h1 style="margin: 0; font-size: 20px; line-height: 28px; font-weight: 600;">Cardio</h1>
+</div>
+<span style="font-size: 13px; line-height: 20px; color: #626F86;">{{count}} items · 30° isometric SVG</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px;">
+<sc-for list="{{items}}" as="item" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<div style="height: 200px; box-sizing: border-box; padding: 16px; border-radius: 12px; background: #F7F8F9;"><img src="{{item.src}}" alt="{{item.alt}}" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; display: block;"></div>
+<div style="display: flex; flex-direction: column;"><span style="font-size: 13px; line-height: 20px; font-weight: 600;">{{item.name}}</span><span style="font-size: 11px; line-height: 16px; color: #626F86; font-family: ui-monospace, Menlo, monospace;">{{item.file}}</span></div>
+</div>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Upload a new SVG to this canvas first, then add it here with its /_blob/ url.
+    const items = [
+      { name: "Treadmill", file: 'treadmill.svg', src: '/_blob/343699c80927305fa9b28ef958a0606a', alt: "Motorized treadmill" },
+      { name: "Curved manual treadmill", file: 'curved-treadmill.svg', src: '/_blob/0429d3bde94d1d168a76863b8406d4c8', alt: "Curved manual treadmill" },
+      { name: "Elliptical / cross-trainer", file: 'elliptical.svg', src: '/_blob/df1554f39ec06dfefb2fdeb6ea4d800c', alt: "Elliptical cross-trainer" },
+      { name: "Upright bike", file: 'upright-bike.svg', src: '/_blob/d58340a554ad3185200589f8efade459', alt: "Upright exercise bike" },
+      { name: "Recumbent bike", file: 'recumbent-bike.svg', src: '/_blob/093d4896f9bc35b9989dbf71eb957b1b', alt: "Recumbent exercise bike" },
+      { name: "Spin / indoor cycling bike", file: 'spin-bike.svg', src: '/_blob/9f6cc7f084cccc992641febe4c32b7a8', alt: "Indoor spin bike" },
+      { name: "Air bike (fan bike)", file: 'air-bike.svg', src: '/_blob/9a123869462cba1d2d0126598043f903', alt: "Air bike with fan wheel" },
+      { name: "Rowing machine", file: 'rowing-machine.svg', src: '/_blob/d451625aa4d5753fa89973cb1f63813a', alt: "Rowing machine" },
+      { name: "Ski erg", file: 'ski-erg.svg', src: '/_blob/27aee2f7eccd26baab1b4e15517dde27', alt: "Ski erg" },
+      { name: "Stair climber / stepmill", file: 'stair-climber.svg', src: '/_blob/109093483fe81494dac481bb5dc62653', alt: "Stair climber with rotating steps" },
+      { name: "Arc trainer", file: 'arc-trainer.svg', src: '/_blob/8cc9f18da2366bede96bf5df282f9d01', alt: "Arc trainer" },
+      { name: "VersaClimber", file: 'versaclimber.svg', src: '/_blob/cb71eea29ea8b59fbb588defd6cc85d5', alt: "VersaClimber" },
+      { name: "Jacob’s ladder", file: 'jacobs-ladder.svg', src: '/_blob/66b51d927cceddc74d3e178f57e8e0f9', alt: "Jacob’s ladder climber" }
+    ];
+    return { items: items, count: items.length };
+  }
+}
+</script>
+</body>
+</html>

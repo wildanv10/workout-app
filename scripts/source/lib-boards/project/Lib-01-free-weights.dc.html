@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Free weights</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0C66E4}a:hover{color:#0055CC}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1180px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; background: #FFFFFF; color: #172B4D; font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid #DCDFE4;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 12px; line-height: 16px; font-weight: 500; color: #626F86;">Isometric library</span>
+<h1 style="margin: 0; font-size: 20px; line-height: 28px; font-weight: 600;">Free weights</h1>
+</div>
+<span style="font-size: 13px; line-height: 20px; color: #626F86;">{{count}} items · 30° isometric SVG</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px;">
+<sc-for list="{{items}}" as="item" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<div style="height: 200px; box-sizing: border-box; padding: 16px; border-radius: 12px; background: #F7F8F9;"><img src="{{item.src}}" alt="{{item.alt}}" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; display: block;"></div>
+<div style="display: flex; flex-direction: column;"><span style="font-size: 13px; line-height: 20px; font-weight: 600;">{{item.name}}</span><span style="font-size: 11px; line-height: 16px; color: #626F86; font-family: ui-monospace, Menlo, monospace;">{{item.file}}</span></div>
+</div>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Upload a new SVG to this canvas first, then add it here with its /_blob/ url.
+    const items = [
+      { name: "Dumbbells (fixed)", file: 'dumbbells.svg', src: '/_blob/a929d9a0df8a13600d2140224eb6bcab', alt: "Pair of hex dumbbells" },
+      { name: "Olympic barbell", file: 'barbell.svg', src: '/_blob/b9d9b7fa4e3bce4e49b2b9af18eb1283', alt: "Olympic barbell loaded with bumper plates" },
+      { name: "Women’s barbell", file: 'womens-barbell.svg', src: '/_blob/74ec97056400467f88b6bec0b49bedb2', alt: "Women’s 15 kg barbell on floor cradles" },
+      { name: "EZ curl bar", file: 'ez-curl-bar.svg', src: '/_blob/f0391c8a05fa28c4169ba1d7b857c20c', alt: "EZ curl bar with plates" },
+      { name: "Trap / hex bar", file: 'trap-bar.svg', src: '/_blob/d6d97ff1d8b2fad7d6a7b7fa3ded1550', alt: "Trap bar loaded with plates" },
+      { name: "Fixed-weight barbells", file: 'fixed-barbells.svg', src: '/_blob/e845005f12b26908d419123507d6cad5', alt: "Rack of fixed-weight barbells" },
+      { name: "Safety squat bar", file: 'safety-squat-bar.svg', src: '/_blob/8438ab2aa36a5da8d59bb32be6ee67da', alt: "Safety squat bar with padded yoke" },
+      { name: "Cambered / Swiss bar", file: 'cambered-bar.svg', src: '/_blob/b6ca34db5c4b83b1a88e524b11410701', alt: "Cambered bar on floor cradles" },
+      { name: "Iron / rubber-coated plates", file: 'weight-plates.svg', src: '/_blob/eada4b79ad0ac1eee5e5446b34ea870c', alt: "Stack of weight plates with one standing" },
+      { name: "Bumper plates", file: 'bumper-plates.svg', src: '/_blob/cef1e5554f73d375fa9c7352ff93aff9', alt: "Bumper plates in a floor rack" },
+      { name: "Fractional plates", file: 'fractional-plates.svg', src: '/_blob/2cae6971c01f3e3d233e647bcbf0d518', alt: "Fractional plates" },
+      { name: "Kettlebells", file: 'kettlebells.svg', src: '/_blob/03583e1ef365d2bcca807e2ca2700991', alt: "Two kettlebells" },
+      { name: "Medicine ball", file: 'medicine-ball.svg', src: '/_blob/8227cb17e1357571b2ec9d20f1fba284', alt: "Medicine ball" },
+      { name: "Slam ball", file: 'slam-ball.svg', src: '/_blob/174fe3afdd2eca46b3202e9e48304f12', alt: "Slam ball" },
+      { name: "Wall ball", file: 'wall-ball.svg', src: '/_blob/1eb3118650608924250e100ccab5c777', alt: "Soft wall ball" },
+      { name: "Sandbag", file: 'sandbag.svg', src: '/_blob/7ecb030d2e9eae2c42c45feaafe56d06', alt: "Training sandbag with handles" },
+      { name: "Weighted vest", file: 'weighted-vest.svg', src: '/_blob/5f6df5505fb2d86a4a5596ea474996cf', alt: "Weighted vest laid flat with plate pockets" },
+      { name: "Barbell collars / clips", file: 'barbell-collars.svg', src: '/_blob/c19920721fd5d09be71767396e62ad39', alt: "Pair of lock-jaw barbell collars" }
+    ];
+    return { items: items, count: items.length };
+  }
+}
+</script>
+</body>
+</html>

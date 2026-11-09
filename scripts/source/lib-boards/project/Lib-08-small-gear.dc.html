@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Small &amp; bodyweight gear</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0C66E4}a:hover{color:#0055CC}
+</style>
+</helmet>
+<div style="width: 1440px; height: 920px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; background: #FFFFFF; color: #172B4D; font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid #DCDFE4;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 12px; line-height: 16px; font-weight: 500; color: #626F86;">Isometric library</span>
+<h1 style="margin: 0; font-size: 20px; line-height: 28px; font-weight: 600;">Small &amp; bodyweight gear</h1>
+</div>
+<span style="font-size: 13px; line-height: 20px; color: #626F86;">{{count}} items · 30° isometric SVG</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px;">
+<sc-for list="{{items}}" as="item" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<div style="height: 200px; box-sizing: border-box; padding: 16px; border-radius: 12px; background: #F7F8F9;"><img src="{{item.src}}" alt="{{item.alt}}" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; display: block;"></div>
+<div style="display: flex; flex-direction: column;"><span style="font-size: 13px; line-height: 20px; font-weight: 600;">{{item.name}}</span><span style="font-size: 11px; line-height: 16px; color: #626F86; font-family: ui-monospace, Menlo, monospace;">{{item.file}}</span></div>
+</div>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Upload a new SVG to this canvas first, then add it here with its /_blob/ url.
+    const items = [
+      { name: "Loop resistance bands", file: 'loop-bands.svg', src: '/_blob/42e3a146b3f5bf88af17f60733f20bcd', alt: "Long loop resistance bands" },
+      { name: "Tube bands with handles", file: 'tube-band.svg', src: '/_blob/db98a6201ad49645592278ba81c58997', alt: "Tube resistance band with handles" },
+      { name: "Mini / booty bands", file: 'mini-bands.svg', src: '/_blob/b2fa9f289d3b9ecc90d7c6c53185ad73', alt: "Mini booty bands" },
+      { name: "Ab wheel", file: 'ab-wheel.svg', src: '/_blob/2b615f3d638a41e2c0399d083080fe86', alt: "Ab wheel" },
+      { name: "Stability (Swiss) ball", file: 'stability-ball.svg', src: '/_blob/99623beb7e86ed7116da3916caf0cf04', alt: "Stability ball" },
+      { name: "BOSU ball", file: 'bosu.svg', src: '/_blob/7d3eb57e7750cbf977aa26cc1938f3ed', alt: "BOSU balance trainer" },
+      { name: "Balance board", file: 'balance-board.svg', src: '/_blob/8146b94a31889ca54d672c70055e4c7d', alt: "Rocker balance board" },
+      { name: "Sliders / gliding discs", file: 'sliders.svg', src: '/_blob/bf5fe842b481d738e089860223dadbe9', alt: "Pair of sliders / gliding discs" },
+      { name: "Ankle / wrist weights", file: 'ankle-weights.svg', src: '/_blob/530a020c622eb0c85faa3ba04cd8a4df', alt: "Pair of ankle weights" },
+      { name: "Aerobic step platform", file: 'aerobic-step.svg', src: '/_blob/9f9b8a2120b6d80369d78a696712b50d', alt: "Aerobic step platform with risers" },
+      { name: "Wrist roller", file: 'wrist-roller.svg', src: '/_blob/b1c6dda02f98ce61e3b336c79e48f892', alt: "Wrist roller with rope and plate" },
+      { name: "Fat grips", file: 'fat-grips.svg', src: '/_blob/e5962254b57c1f5a89a5beafde0443e2', alt: "Pair of fat grips" },
+      { name: "Exercise / yoga mat", file: 'exercise-mat.svg', src: '/_blob/a323da3fc8d66c3691030e917fdb3039', alt: "Exercise mat, partly rolled" },
+      { name: "Pilates reformer", file: 'pilates-reformer.svg', src: '/_blob/bb97ed2d400f1236fb7facb0540edbc9', alt: "Pilates reformer" }
+    ];
+    return { items: items, count: items.length };
+  }
+}
+</script>
+</body>
+</html>

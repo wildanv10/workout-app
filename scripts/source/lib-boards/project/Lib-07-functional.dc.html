@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Functional &amp; conditioning</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0C66E4}a:hover{color:#0055CC}
+</style>
+</helmet>
+<div style="width: 1440px; height: 920px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; background: #FFFFFF; color: #172B4D; font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid #DCDFE4;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 12px; line-height: 16px; font-weight: 500; color: #626F86;">Isometric library</span>
+<h1 style="margin: 0; font-size: 20px; line-height: 28px; font-weight: 600;">Functional &amp; conditioning</h1>
+</div>
+<span style="font-size: 13px; line-height: 20px; color: #626F86;">{{count}} items · 30° isometric SVG</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px;">
+<sc-for list="{{items}}" as="item" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<div style="height: 200px; box-sizing: border-box; padding: 16px; border-radius: 12px; background: #F7F8F9;"><img src="{{item.src}}" alt="{{item.alt}}" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; display: block;"></div>
+<div style="display: flex; flex-direction: column;"><span style="font-size: 13px; line-height: 20px; font-weight: 600;">{{item.name}}</span><span style="font-size: 11px; line-height: 16px; color: #626F86; font-family: ui-monospace, Menlo, monospace;">{{item.file}}</span></div>
+</div>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Upload a new SVG to this canvas first, then add it here with its /_blob/ url.
+    const items = [
+      { name: "Battle ropes", file: 'battle-ropes.svg', src: '/_blob/5166985b67f90971ba92eff5996ddaa8', alt: "Battle ropes anchored to a post" },
+      { name: "Plyo box", file: 'plyo-box.svg', src: '/_blob/493e9505ebce53121082450913e0b3c4', alt: "Plyo box" },
+      { name: "Push sled / prowler", file: 'push-sled.svg', src: '/_blob/2b0305eafbbe74edd1c4b23176cd328e', alt: "Push sled / prowler loaded with plates" },
+      { name: "Gymnastic rings", file: 'gymnastic-rings.svg', src: '/_blob/b4545793b52b93a16325ee0fa3d015b1', alt: "Gymnastic rings on straps" },
+      { name: "Suspension trainer", file: 'suspension-trainer.svg', src: '/_blob/9229f9c437e06b9721fb07faa7343ce4', alt: "Suspension trainer straps with handles" },
+      { name: "Parallettes", file: 'parallettes.svg', src: '/_blob/f93d3e1bb03921ef84e770ac4a33287e', alt: "Pair of parallettes" },
+      { name: "Jump rope", file: 'jump-rope.svg', src: '/_blob/03acdf4bff0478bd4aea9732d457d1c1', alt: "Jump rope" },
+      { name: "Agility ladder, cones, hurdles", file: 'agility-set.svg', src: '/_blob/54e6fc21a10d7c4b9a7b1ef0a824c65d', alt: "Agility ladder, cones and speed hurdles" },
+      { name: "Climbing rope", file: 'climbing-rope.svg', src: '/_blob/0b8ebf1db07eee844e7102780f3a2121', alt: "Climbing rope hanging from a beam" },
+      { name: "Tire and sledgehammer", file: 'tire-sledgehammer.svg', src: '/_blob/ac4514db1fed0bed665f4862b4d9cdd6', alt: "Tractor tire with sledgehammer" },
+      { name: "Rig / monkey bars", file: 'rig.svg', src: '/_blob/639b83a6c2ccc4ab8174a197a2911649', alt: "Rig with monkey bars, pull-up bars and rings" }
+    ];
+    return { items: items, count: items.length };
+  }
+}
+</script>
+</body>
+</html>

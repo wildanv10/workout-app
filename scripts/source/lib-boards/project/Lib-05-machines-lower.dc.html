@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Machines: lower body &amp; core</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0C66E4}a:hover{color:#0055CC}
+</style>
+</helmet>
+<div style="width: 1440px; height: 920px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; background: #FFFFFF; color: #172B4D; font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid #DCDFE4;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 12px; line-height: 16px; font-weight: 500; color: #626F86;">Isometric library</span>
+<h1 style="margin: 0; font-size: 20px; line-height: 28px; font-weight: 600;">Machines: lower body &amp; core</h1>
+</div>
+<span style="font-size: 13px; line-height: 20px; color: #626F86;">{{count}} items · 30° isometric SVG</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px;">
+<sc-for list="{{items}}" as="item" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<div style="height: 200px; box-sizing: border-box; padding: 16px; border-radius: 12px; background: #F7F8F9;"><img src="{{item.src}}" alt="{{item.alt}}" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; display: block;"></div>
+<div style="display: flex; flex-direction: column;"><span style="font-size: 13px; line-height: 20px; font-weight: 600;">{{item.name}}</span><span style="font-size: 11px; line-height: 16px; color: #626F86; font-family: ui-monospace, Menlo, monospace;">{{item.file}}</span></div>
+</div>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Upload a new SVG to this canvas first, then add it here with its /_blob/ url.
+    const items = [
+      { name: "Leg press", file: 'leg-press.svg', src: '/_blob/36badf4aa2b001aa15ee4fdc90a10db5', alt: "45 degree plate-loaded leg press" },
+      { name: "Hack squat", file: 'hack-squat.svg', src: '/_blob/3130728cc551990da234b3c9d3c6baa7', alt: "Plate-loaded hack squat" },
+      { name: "Pendulum squat", file: 'pendulum-squat.svg', src: '/_blob/810e4fd316f1dbc7f69dd06a33c918d3', alt: "Pendulum squat" },
+      { name: "V-squat", file: 'v-squat.svg', src: '/_blob/3017cb6492dab68ecb46ee19d88793b7', alt: "V-squat machine" },
+      { name: "Belt squat", file: 'belt-squat.svg', src: '/_blob/5414bce89c9d327ed1292c2b39ec6803', alt: "Belt squat machine" },
+      { name: "Leg extension", file: 'leg-extension.svg', src: '/_blob/abd868319d8d020ef30385146e02384e', alt: "Leg extension machine" },
+      { name: "Leg curl (lying or seated)", file: 'leg-curl.svg', src: '/_blob/f24fd31b077a6990465fae77323671ee', alt: "Lying leg curl machine" },
+      { name: "Hip thrust / glute drive machine", file: 'hip-thrust.svg', src: '/_blob/4dd9702f3febf64774b2860c20b6da43', alt: "Hip thrust / glute drive machine" },
+      { name: "Hip abductor / adductor", file: 'hip-abductor.svg', src: '/_blob/25d530c73472f36e5005a479443f918b', alt: "Hip abductor / adductor machine" },
+      { name: "Glute kickback machine", file: 'glute-kickback.svg', src: '/_blob/db606995050a83657753c7f1f91e0f5f', alt: "Glute kickback machine" },
+      { name: "Calf raise machine", file: 'calf-raise.svg', src: '/_blob/60362170e9c8f00c73b4d2ab13b00f98', alt: "Standing calf raise machine" },
+      { name: "Ab crunch machine", file: 'ab-crunch.svg', src: '/_blob/7f743484d70bd0b9ee08e06284e9b7c1', alt: "Abdominal crunch machine" },
+      { name: "Rotary torso machine", file: 'rotary-torso.svg', src: '/_blob/efae897297c947de69d8f7e495bc00d7', alt: "Rotary torso machine" }
+    ];
+    return { items: items, count: items.length };
+  }
+}
+</script>
+</body>
+</html>

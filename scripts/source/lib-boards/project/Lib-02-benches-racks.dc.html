@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Benches, racks &amp; stations</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0C66E4}a:hover{color:#0055CC}
+</style>
+</helmet>
+<div style="width: 1440px; height: 920px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; background: #FFFFFF; color: #172B4D; font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid #DCDFE4;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 12px; line-height: 16px; font-weight: 500; color: #626F86;">Isometric library</span>
+<h1 style="margin: 0; font-size: 20px; line-height: 28px; font-weight: 600;">Benches, racks &amp; stations</h1>
+</div>
+<span style="font-size: 13px; line-height: 20px; color: #626F86;">{{count}} items · 30° isometric SVG</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px;">
+<sc-for list="{{items}}" as="item" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<div style="height: 200px; box-sizing: border-box; padding: 16px; border-radius: 12px; background: #F7F8F9;"><img src="{{item.src}}" alt="{{item.alt}}" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; display: block;"></div>
+<div style="display: flex; flex-direction: column;"><span style="font-size: 13px; line-height: 20px; font-weight: 600;">{{item.name}}</span><span style="font-size: 11px; line-height: 16px; color: #626F86; font-family: ui-monospace, Menlo, monospace;">{{item.file}}</span></div>
+</div>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Upload a new SVG to this canvas first, then add it here with its /_blob/ url.
+    const items = [
+      { name: "Flat bench", file: 'flat-bench.svg', src: '/_blob/b9dd15ab8eba5aaa0906baf8fb84a22e', alt: "Flat weight bench" },
+      { name: "Adjustable (FID) bench", file: 'adjustable-bench.svg', src: '/_blob/a6bde632194bde6d2a0b50cdff654670', alt: "Adjustable bench set to incline" },
+      { name: "Decline bench", file: 'decline-bench.svg', src: '/_blob/a9602ba51343022787269af9f19ba1c5', alt: "Decline bench with leg rollers" },
+      { name: "Preacher curl bench", file: 'preacher-curl-bench.svg', src: '/_blob/9675278b42c6deac7cafda5df9282075', alt: "Preacher curl bench" },
+      { name: "Power rack / squat cage", file: 'power-rack.svg', src: '/_blob/d1712171447e8aaa2add4c0a9feb76c4', alt: "Power rack with J-hooks, safety pins and pull-up bar" },
+      { name: "Squat stands / half rack", file: 'squat-stands.svg', src: '/_blob/00865528a83f358c493e7183806de6a3', alt: "Pair of squat stands with a racked barbell" },
+      { name: "Smith machine", file: 'smith-machine.svg', src: '/_blob/2408bc32cd8b13ecbb717ba9b26b4d07', alt: "Smith machine with guide rods, barbell and plates" },
+      { name: "Pull-up bar", file: 'pull-up-bar.svg', src: '/_blob/0c0cdd39eae8e7cdd03b13ed6df583e9', alt: "Doorway pull-up bar" },
+      { name: "Dip station / parallel bars", file: 'dip-station.svg', src: '/_blob/077549284b7f2d8071ff84f86f232879', alt: "Freestanding dip station" },
+      { name: "Power tower / captain’s chair", file: 'power-tower.svg', src: '/_blob/b6aab5924463d927f7b20840b3405b8c', alt: "Power tower with pull-up, dip and knee-raise stations" },
+      { name: "45° back extension", file: 'back-extension.svg', src: '/_blob/222ce68c1a58d18b111cdf024134c116', alt: "45 degree back extension" },
+      { name: "GHD (glute-ham developer)", file: 'ghd.svg', src: '/_blob/386d25fefe568b05b26321bc1cef925d', alt: "Glute-ham developer (GHD)" },
+      { name: "Landmine attachment", file: 'landmine.svg', src: '/_blob/7264bee00ead7c9a2dc47528a3ffd5fa', alt: "Landmine base with barbell" },
+      { name: "Dumbbell rack", file: 'dumbbell-rack.svg', src: '/_blob/f59c00e2d296b2406541a94b2165e4f7', alt: "Two-tier dumbbell rack" },
+      { name: "Plate tree", file: 'plate-tree.svg', src: '/_blob/537b5034ef09e3039da0ab9fdf0300ae', alt: "Plate tree loaded with plates" }
+    ];
+    return { items: items, count: items.length };
+  }
+}
+</script>
+</body>
+</html>
