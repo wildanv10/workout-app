@@ -135,3 +135,11 @@
 .save[aria-pressed='true'] {
   color: var(--brand);
 }
+
+.safety {
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--mut);
+  font-size: 12px;
+  line-height: 17px;
+}

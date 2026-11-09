@@ -190,6 +190,11 @@ export default function PlanPage() {
         <Link href="/new/muscles" className={styles.restart}>
           Start a different workout
         </Link>
+
+        <p className={styles.safety}>
+          General guidance only, not a substitute for a coach. Warm up first, start lighter
+          than you think you need, and stop if something hurts.
+        </p>
       </main>
 
       <div className={`actions ${styles.bar}`}>
