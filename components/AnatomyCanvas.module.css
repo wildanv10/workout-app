@@ -1,11 +1,14 @@
-.canvas {
-  display: block;
-  width: 100%;
-  /* Vertical gestures still scroll the page; horizontal drag rotates the body. */
-  touch-action: pan-y;
-  cursor: grab;
-}
-
-.canvas:active {
-  cursor: grabbing;
+.tip {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  max-width: calc(100% - 24px);
+  padding: 4px 10px;
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 18px;
+  pointer-events: none;
 }

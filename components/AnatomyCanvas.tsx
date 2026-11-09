@@ -1,82 +1,87 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import {
-  loadEngine,
-  FIGURE_COLORS,
-  FIGURE_COLORS_DARK,
-  type AnatomyControl,
-} from '@/engine/gf';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import EcorcheCanvas from './EcorcheCanvas';
+import type { EcorcheEngine, EcorcheViewer } from '@/engine/ecorche';
 import type { MuscleGroupId } from '@/data/muscles';
 import styles from './AnatomyCanvas.module.css';
 
 interface Props {
   selected: readonly MuscleGroupId[];
   onToggle: (id: MuscleGroupId) => void;
-  /** 'front' | 'back' - animates the body around when it changes. */
+  /** Animates the body around when it changes. */
   facing: 'front' | 'back';
   height?: number;
 }
 
-export default function AnatomyCanvas({ selected, onToggle, facing, height = 318 }: Props) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const controlRef = useRef<AnatomyControl | null>(null);
+/**
+ * The anatomical body for picking muscle groups. Tapping a muscle toggles its
+ * group; every selected group is highlighted at once, which the engine's
+ * single-group `selectGroup` cannot do, so we drive `setFocus` with the muscle
+ * keys of all selected groups.
+ */
+export default function AnatomyCanvas({ selected, onToggle, facing, height = 330 }: Props) {
+  const viewerRef = useRef<EcorcheViewer | null>(null);
+  const keysByGroupRef = useRef<Map<string, string[]>>(new Map());
   const onToggleRef = useRef(onToggle);
-  const [failed, setFailed] = useState(false);
+  const [hovered, setHovered] = useState<string | null>(null);
 
-  // Keep the latest callback without re-mounting the engine.
   useEffect(() => {
     onToggleRef.current = onToggle;
   }, [onToggle]);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    let active = true;
-
-    loadEngine()
-      .then((gf) => {
-        if (!active || !canvas.isConnected) return;
-        const control = gf.mountAnatomy(canvas);
-        const dark =
-          typeof window !== 'undefined' &&
-          window.matchMedia?.('(prefers-color-scheme: dark)').matches;
-        control.colors = dark ? FIGURE_COLORS_DARK : FIGURE_COLORS;
-        control.onToggle = (id) => onToggleRef.current(id as MuscleGroupId);
-        controlRef.current = control;
-        control.setSelected(selected);
-        control.face(facing === 'back');
-      })
-      .catch(() => {
-        if (active) setFailed(true);
-      });
-
-    return () => {
-      active = false;
-      // The engine's render loop stops on its own once the canvas is detached.
-      if (controlRef.current) controlRef.current.onToggle = null;
-      controlRef.current = null;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  const applyFocus = useCallback((groups: readonly MuscleGroupId[]) => {
+    const viewer = viewerRef.current;
+    if (!viewer) return;
+    const keys = groups.flatMap((group) => keysByGroupRef.current.get(group) ?? []);
+    viewer.setFocus(keys.length ? { primary: keys } : null);
   }, []);
 
-  useEffect(() => {
-    controlRef.current?.setSelected(selected);
-  }, [selected]);
+  const handleReady = useCallback(
+    (viewer: EcorcheViewer, engine: EcorcheEngine) => {
+      viewerRef.current = viewer;
+
+      const byGroup = new Map<string, string[]>();
+      for (const muscle of engine.MUSCLES) {
+        if (!muscle.group) continue;
+        const list = byGroup.get(muscle.group);
+        if (list) list.push(muscle.key);
+        else byGroup.set(muscle.group, [muscle.key]);
+      }
+      keysByGroupRef.current = byGroup;
+
+      viewer.on('select', (muscle) => {
+        if (muscle?.group) onToggleRef.current(muscle.group as MuscleGroupId);
+      });
+      viewer.on('hover', (muscle) => {
+        setHovered(muscle ? [muscle.name, muscle.part].filter(Boolean).join(' · ') : null);
+      });
+
+      viewer.view(facing, true);
+      applyFocus(selected);
+    },
+    // Only the first mount matters; later changes flow through the effects below.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [applyFocus],
+  );
 
   useEffect(() => {
-    controlRef.current?.face(facing === 'back');
+    applyFocus(selected);
+  }, [selected, applyFocus]);
+
+  useEffect(() => {
+    viewerRef.current?.view(facing);
   }, [facing]);
 
-  if (failed) return null;
-
   return (
-    <canvas
-      ref={canvasRef}
-      data-gf="anatomy"
-      className={styles.canvas}
-      style={{ height }}
-      aria-label="Interactive 3D body. Drag to rotate, tap a muscle to select it."
-    />
+    <EcorcheCanvas
+      onReady={handleReady}
+      label="Interactive 3D body. Drag to rotate, tap a muscle to select its group."
+      loadingLabel="Building the muscle model…"
+      height={height}
+      fallback={null}
+    >
+      {hovered && <span className={styles.tip}>{hovered}</span>}
+    </EcorcheCanvas>
   );
 }

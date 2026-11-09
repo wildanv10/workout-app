@@ -1,5 +1,159 @@
-.frame {
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hint {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--mut);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.play {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+}
+
+.play:hover {
+  background: var(--brand-hover);
+}
+
+.phase {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.phase b {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.phase span {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--mut);
+  font-variant-numeric: tabular-nums;
+}
+
+.speeds {
+  display: inline-flex;
+  flex: none;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--r-md);
+  background: var(--sunk);
+}
+
+.speeds button {
+  min-height: 28px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--subtle);
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.speeds button[aria-pressed='true'] {
+  background: var(--surface);
+  color: var(--brand);
+  box-shadow: var(--shadow);
+}
+
+.track {
   position: relative;
+  height: 20px;
+}
+
+.track::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 8px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line);
+}
+
+.fill {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--brand);
+  pointer-events: none;
+}
+
+.track input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.knob {
+  position: absolute;
+  top: 3px;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: 0 0 0 2px var(--brand);
+  pointer-events: none;
+}
+
+.knob[data-scrubbing] {
+  transform: scale(1.15);
+}
+
+.track input:focus-visible ~ .knob {
+  box-shadow: 0 0 0 2px var(--brand), 0 0 0 5px var(--focus);
+}
+
+.fallback {
   display: grid;
   place-items: center;
   width: 100%;
@@ -8,23 +162,16 @@
   overflow: hidden;
 }
 
-.canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-  touch-action: pan-y;
-}
-
 .svg {
   width: 100%;
   height: 100%;
-  max-height: 100%;
   object-fit: contain;
   padding: 16px;
 }
 
-.placeholder {
-  position: absolute;
+.none {
   color: var(--mut);
   font-size: 13px;
+  padding: 0 24px;
+  text-align: center;
 }

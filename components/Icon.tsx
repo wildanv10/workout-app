@@ -18,6 +18,10 @@ const PATHS = {
   trash: ['M3 6h18', 'M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6', 'M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'],
   target: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z', 'M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z', 'M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'],
   info: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z', 'M12 16v-4', 'M12 8h.01'],
+  play: ['M6 4.5v15l13-7.5z'],
+  pause: ['M7 4h3v16H7z', 'M14 4h3v16h-3z'],
+  bookmark: ['m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z'],
+  spin: ['M21 12a9 9 0 1 1-6.22-8.56', 'M21 3v6h-6'],
   alert: ['m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3', 'M12 9v4', 'M12 17h.01'],
 } as const;
 
@@ -26,16 +30,21 @@ export type IconName = keyof typeof PATHS;
 interface Props extends Omit<SVGProps<SVGSVGElement>, 'name'> {
   name: IconName;
   size?: number;
+  /** Fill the shape instead of stroking it - for play, pause and a set bookmark. */
+  solid?: boolean;
 }
 
-export default function Icon({ name, size = 20, ...rest }: Props) {
+const SOLID_BY_DEFAULT = new Set<IconName>(['play', 'pause']);
+
+export default function Icon({ name, size = 20, solid, ...rest }: Props) {
+  const filled = solid ?? SOLID_BY_DEFAULT.has(name);
   return (
     <svg
       viewBox="0 0 24 24"
       width={size}
       height={size}
-      fill="none"
-      stroke="currentColor"
+      fill={filled ? 'currentColor' : 'none'}
+      stroke={filled ? 'none' : 'currentColor'}
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"

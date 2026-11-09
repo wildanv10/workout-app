@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ScreenHeader from './ScreenHeader';
 import EquipmentGrid from './EquipmentGrid';
+import EquipmentModelDialog from './EquipmentModelDialog';
 import Icon from './Icon';
 import { newSetupId, useStore, type EquipmentSetup } from '@/lib/store';
 import { availableExercises } from '@/lib/availability';
@@ -48,6 +49,7 @@ function Fields({ setup, isNew }: { setup: EquipmentSetup; isNew: boolean }) {
   const router = useRouter();
   const { state, dispatch } = useStore();
   const [name, setName] = useState(setup.name);
+  const [modelCode, setModelCode] = useState<EquipmentCode | null>(null);
   const [items, setItems] = useState<EquipmentCode[]>([...setup.items]);
 
   const toggle = (code: EquipmentCode) =>
@@ -116,7 +118,12 @@ function Fields({ setup, isNew }: { setup: EquipmentSetup; isNew: boolean }) {
           <p className={styles.counter}>
             {items.length} selected · {count} exercises available
           </p>
-          <EquipmentGrid owned={items} onToggle={toggle} onToggleCategory={toggleCategory} />
+          <EquipmentGrid
+            owned={items}
+            onToggle={toggle}
+            onToggleCategory={toggleCategory}
+            onShowModel={setModelCode}
+          />
         </div>
       </main>
 
@@ -125,6 +132,8 @@ function Fields({ setup, isNew }: { setup: EquipmentSetup; isNew: boolean }) {
           Save setup
         </button>
       </div>
+
+      <EquipmentModelDialog code={modelCode} onClose={() => setModelCode(null)} />
     </>
   );
 }

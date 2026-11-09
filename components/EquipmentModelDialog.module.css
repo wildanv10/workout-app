@@ -1,0 +1,150 @@
+.dialog {
+  width: min(440px, calc(100vw - 24px));
+  max-height: min(86vh, 720px);
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-lifted);
+  overflow: hidden;
+}
+
+.dialog::backdrop {
+  background: rgb(9 30 66 / 54%);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  max-height: inherit;
+  overflow-y: auto;
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.titles {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.category {
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.title {
+  font-size: 19px;
+  line-height: 26px;
+  font-weight: 600;
+}
+
+.close {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  margin: -6px -6px 0 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--mut);
+}
+
+.close:hover {
+  background: var(--sunk);
+  color: var(--ink);
+}
+
+.caption {
+  color: var(--mut);
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+}
+
+.spin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--subtle);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.spin[aria-pressed='true'] {
+  border-color: var(--brand);
+  background: var(--brand-sub);
+  color: var(--brand-text);
+}
+
+.uses {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 4px;
+  border-top: 1px solid var(--line);
+}
+
+.usesHead {
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.usesList {
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--subtle);
+}
+
+.fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 260px;
+  border-radius: var(--r-lg);
+  background: var(--sub);
+  color: var(--mut);
+  font-size: 13px;
+  padding: 16px;
+}
+
+.fallbackSvg {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+}
+
+.note {
+  font-size: 12px;
+}

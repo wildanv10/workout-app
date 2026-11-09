@@ -12,16 +12,19 @@ const byCode = new Map(EQUIPMENT.map((e) => [e.code, e]));
 /**
  * The "what you have" picker: 41 items in collapsible categories, so the list
  * stays scannable on a phone. Bodyweight needs no entry - exercises with no
- * equipment are always available.
+ * equipment are always available. Each row has an info button that opens the
+ * item's 3D model.
  */
 export default function EquipmentGrid({
   owned,
   onToggle,
   onToggleCategory,
+  onShowModel,
 }: {
   owned: readonly EquipmentCode[];
   onToggle: (code: EquipmentCode) => void;
   onToggleCategory: (codes: EquipmentCode[], on: boolean) => void;
+  onShowModel?: (code: EquipmentCode) => void;
 }) {
   const ownedSet = new Set(owned);
   const [open, setOpen] = useState<string[]>([EQUIPMENT_CATEGORIES[0].id]);
@@ -73,28 +76,39 @@ export default function EquipmentGrid({
                   const on = ownedSet.has(code);
                   const svg = getEquipment(code)?.svg;
                   return (
-                    <button
-                      key={code}
-                      type="button"
-                      className={styles.item}
-                      aria-pressed={on}
-                      onClick={() => onToggle(code)}
-                    >
-                      <span className={styles.box}>
-                        {on && <Icon name="check" size={12} strokeWidth={3} />}
-                      </span>
-                      {svg && (
-                        <Image
-                          src={`/equipment/${svg}`}
-                          alt=""
-                          className={styles.thumb}
-                          width={32}
-                          height={32}
-                          unoptimized
-                        />
+                    <div key={code} className={styles.row}>
+                      <button
+                        type="button"
+                        className={styles.item}
+                        aria-pressed={on}
+                        onClick={() => onToggle(code)}
+                      >
+                        <span className={styles.box}>
+                          {on && <Icon name="check" size={12} strokeWidth={3} />}
+                        </span>
+                        {svg && (
+                          <Image
+                            src={`/equipment/${svg}`}
+                            alt=""
+                            className={styles.thumb}
+                            width={32}
+                            height={32}
+                            unoptimized
+                          />
+                        )}
+                        <span className={styles.itemName}>{item.name}</span>
+                      </button>
+                      {onShowModel && (
+                        <button
+                          type="button"
+                          className={styles.info}
+                          onClick={() => onShowModel(code)}
+                          aria-label={`See ${item.name} in 3D`}
+                        >
+                          <Icon name="info" size={18} />
+                        </button>
                       )}
-                      <span className={styles.itemName}>{item.name}</span>
-                    </button>
+                    </div>
                   );
                 })}
               </div>

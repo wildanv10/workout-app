@@ -71,7 +71,32 @@
   font-weight: 600;
 }
 
+.row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.info {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--mut);
+}
+
+.info:hover {
+  background: var(--brand-sub);
+  color: var(--brand-text);
+}
+
 .item {
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 10px;

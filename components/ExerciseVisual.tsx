@@ -1,162 +1,166 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import {
-  loadEngine,
-  FIGURE_COLORS,
-  FIGURE_COLORS_DARK,
-  type FigureColors,
-} from '@/engine/gf';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import EcorcheCanvas from './EcorcheCanvas';
+import Icon from './Icon';
+import { motionIdOf, type EcorcheViewer, type ExerciseState } from '@/engine/ecorche';
+import { phaseLabel } from '@/engine/phase-labels';
 import type { Exercise } from '@/data/exercises';
 import { getEquipment } from '@/data/equipment';
-import { primaryGroups } from '@/lib/generate';
 import { requiredEquipment } from '@/lib/availability';
 import styles from './ExerciseVisual.module.css';
 
-const figureColors = (): FigureColors =>
-  typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches
-    ? FIGURE_COLORS_DARK
-    : FIGURE_COLORS;
+const SPEEDS = [0.5, 1, 2] as const;
 
 /**
- * Shows an exercise, falling back as the source material allows:
- *   1. an animation, where fig-poses.js has a template that really matches
- *   2. the isometric illustration of the equipment it uses
- *   3. a still body with the target muscles highlighted
+ * The exercise animation. Every one of the 104 exercises has a motion in the
+ * engine, so this is the real movement rather than a still - with a fallback to
+ * the isometric equipment illustration where WebGL2 is unavailable.
  */
 export default function ExerciseVisual({
   exercise,
-  height = 280,
-  zoom = 1.05,
+  height = 320,
 }: {
   exercise: Exercise;
   height?: number;
-  zoom?: number;
 }) {
+  const viewerRef = useRef<EcorcheViewer | null>(null);
+  const [state, setState] = useState<ExerciseState | null>(null);
+  const [scrubbing, setScrubbing] = useState(false);
+  const scrubbingRef = useRef(false);
+  const lastTick = useRef(0);
+
+  const handleReady = useCallback(
+    (viewer: EcorcheViewer) => {
+      viewerRef.current = viewer;
+      viewer.setExercise(motionIdOf(exercise.id));
+      viewer.on('frame', () => {
+        const now = performance.now();
+        if (now - lastTick.current < 60) return;
+        lastTick.current = now;
+        const next = viewer.exerciseState();
+        if (next) setState({ ...next });
+      });
+    },
+    [exercise.id],
+  );
+
+  useEffect(() => {
+    viewerRef.current?.setExercise(motionIdOf(exercise.id));
+  }, [exercise.id]);
+
+  const togglePlay = () => {
+    const viewer = viewerRef.current;
+    if (!viewer) return;
+    viewer.exercisePlay(!state?.playing);
+  };
+
+  const seek = (value: number) => {
+    viewerRef.current?.exerciseSeek(value / 1000);
+  };
+
+  const startScrub = () => {
+    scrubbingRef.current = state?.playing ?? true;
+    setScrubbing(true);
+    viewerRef.current?.exercisePlay(false);
+  };
+
+  const endScrub = () => {
+    setScrubbing(false);
+    if (scrubbingRef.current) viewerRef.current?.exercisePlay(true);
+  };
+
+  const label = state ? phaseLabel(state.label) : null;
+
+  return (
+    <div className={styles.wrap}>
+      <EcorcheCanvas
+        onReady={handleReady}
+        label={`3D demonstration of ${exercise.name}`}
+        loadingLabel="Building the 3D model…"
+        height={height}
+        fallback={<EquipmentFallback exercise={exercise} height={height} />}
+      >
+        <span className={styles.hint}>
+          <Icon name="rotate" size={14} />
+          Drag to change the angle
+        </span>
+      </EcorcheCanvas>
+
+      {state && (
+        <div className={styles.player}>
+          <div className={styles.row}>
+            <button
+              type="button"
+              className={styles.play}
+              onClick={togglePlay}
+              aria-label={state.playing ? 'Pause' : 'Play'}
+            >
+              <Icon name={state.playing ? 'pause' : 'play'} size={18} />
+            </button>
+            <span className={styles.phase}>
+              {label && <b>{label}</b>}
+              <span>
+                Rep {state.rep + 1} · {state.t.toFixed(1)} / {state.cycle.toFixed(1)} s
+              </span>
+            </span>
+            <span className={styles.speeds} role="group" aria-label="Speed">
+              {SPEEDS.map((speed) => (
+                <button
+                  key={speed}
+                  type="button"
+                  aria-pressed={state.speed === speed}
+                  onClick={() => viewerRef.current?.exerciseSpeed(speed)}
+                >
+                  {speed}×
+                </button>
+              ))}
+            </span>
+          </div>
+
+          <div className={styles.track}>
+            <span className={styles.fill} style={{ width: `${state.frac * 100}%` }} />
+            <input
+              type="range"
+              min={0}
+              max={1000}
+              value={Math.round(state.frac * 1000)}
+              onPointerDown={startScrub}
+              onPointerUp={endScrub}
+              onPointerCancel={endScrub}
+              onChange={(event) => seek(Number(event.target.value))}
+              aria-label="Position in the movement"
+            />
+            <span
+              className={styles.knob}
+              style={{ left: `${state.frac * 100}%` }}
+              data-scrubbing={scrubbing || undefined}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Shown when WebGL2 is unavailable: the isometric illustration of its gear. */
+function EquipmentFallback({ exercise, height }: { exercise: Exercise; height: number }) {
   const illustration = requiredEquipment(exercise)
     .map((code) => getEquipment(code))
     .find((item) => item?.svg);
 
-  if (exercise.anim) {
-    return <AnimatedFigure exercise={exercise} height={height} zoom={zoom} />;
-  }
-
-  if (illustration?.svg) {
-    return (
-      <div className={styles.frame} style={{ height }}>
-        <Image
+  return (
+    <div className={styles.fallback} style={{ height }}>
+      {illustration?.svg ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
           src={`/equipment/${illustration.svg}`}
           alt={illustration.alt ?? `Illustration of ${illustration.name}`}
           className={styles.svg}
-          width={320}
-          height={240}
-          unoptimized
         />
-      </div>
-    );
-  }
-
-  return <StillFigure exercise={exercise} height={height} zoom={zoom} />;
-}
-
-function AnimatedFigure({
-  exercise,
-  height,
-  zoom,
-}: {
-  exercise: Exercise;
-  height: number;
-  zoom: number;
-}) {
-  const ref = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = ref.current;
-    if (!canvas || !exercise.anim) return;
-    let active = true;
-
-    loadEngine()
-      .then((gf) => {
-        if (!active || !canvas.isConnected) return;
-        const control = gf.mountExercise(canvas);
-        control.colors = figureColors();
-        control.view.zoom = zoom;
-        control.setAnim(exercise.anim!, primaryGroups(exercise));
-      })
-      .catch(() => {});
-
-    return () => {
-      active = false;
-    };
-  }, [exercise, zoom]);
-
-  return (
-    <canvas
-      ref={ref}
-      className={styles.canvas}
-      style={{ height }}
-      aria-label={`Animated demonstration of ${exercise.name}`}
-    />
-  );
-}
-
-function StillFigure({
-  exercise,
-  height,
-  zoom,
-}: {
-  exercise: Exercise;
-  height: number;
-  zoom: number;
-}) {
-  const ref = useRef<HTMLCanvasElement>(null);
-  const [drawn, setDrawn] = useState(false);
-
-  useEffect(() => {
-    const canvas = ref.current;
-    if (!canvas) return;
-    let active = true;
-    let observer: ResizeObserver | undefined;
-
-    loadEngine()
-      .then((gf) => {
-        if (!active || !canvas.isConnected) return;
-        const view = new gf.View(canvas);
-        view.yaw = 0.6;
-        view.pitch = 0.1;
-        view.zoom = zoom;
-        const joints = gf.build({ ab: 14, e: 6 });
-        const groups = primaryGroups(exercise);
-
-        const draw = () => {
-          view.resize();
-          gf.drawFigure(view, joints, {
-            selected: groups,
-            noIdle: true,
-            colors: figureColors(),
-          });
-        };
-        draw();
-        setDrawn(true);
-        observer = new ResizeObserver(draw);
-        observer.observe(canvas);
-      })
-      .catch(() => {});
-
-    return () => {
-      active = false;
-      observer?.disconnect();
-    };
-  }, [exercise, zoom]);
-
-  const groups = primaryGroups(exercise);
-  const label = `Target muscles for ${exercise.name}`;
-
-  return (
-    <div className={styles.frame} style={{ height }}>
-      <canvas ref={ref} className={styles.canvas} aria-label={label} />
-      {!drawn && <span className={styles.placeholder}>{groups.length} target muscles</span>}
+      ) : (
+        <span className={styles.none}>{exercise.name} uses no equipment.</span>
+      )}
     </div>
   );
 }
