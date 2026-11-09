@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "extract-data": "node scripts/extract-data.mjs",
+    "test": "vitest run",
+    "build-art": "node scripts/build-equipment-art.mjs",
+    "install-art": "node scripts/install-equipment-art.mjs"
   },
   "dependencies": {
     "next": "16.4.5",
@@ -19,6 +23,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.5",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   }
 }
