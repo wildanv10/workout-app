@@ -3,4 +3,4 @@
 # ignored. Left off rather than approved so no install-time script runs.
 allowBuilds:
   esbuild: false
-  workerd: set this to true or false
+  workerd: true
