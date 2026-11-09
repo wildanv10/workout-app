@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored verbatim from the Atlas artifact - kept unmodified so it can be
+    // re-synced. See engine/gf.ts for the typed wrapper we actually call.
+    "engine/fig-core.js",
+    "engine/fig-poses.js",
   ]),
 ]);
 
