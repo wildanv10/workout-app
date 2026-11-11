@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import vinext from "vinext";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { imagesOptimizer } from "@vinext/cloudflare/images/images-optimizer";
+import { staticAssetsAdapter } from "@vinext/cloudflare/cache/static-assets-adapter";
 import { createHash } from "node:crypto";
 import { patchCssModules } from "vite-css-modules";
 import path from "node:path";
@@ -10,6 +11,8 @@ export default defineConfig({
   plugins: [
     patchCssModules({ exportMode: "default" }),
     vinext({
+      cache: { cdn: staticAssetsAdapter() },
+      prerender: { routes: "*" },
       images: { optimizer: imagesOptimizer() },
     }),
     cloudflare({

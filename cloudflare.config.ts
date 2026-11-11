@@ -6,6 +6,7 @@ export default defineConfig({
     entrypoint: "vinext/server/fetch-handler",
     compatibilityDate: "2026-11-09",
     compatibilityFlags: ["nodejs_compat"],
+    domains: ["workout-app.itsbeta.dev"],
     assets: {
       htmlHandling: "none",
       notFoundHandling: "none",
